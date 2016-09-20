@@ -10,6 +10,7 @@
 <body>
 
 <script>
+/*
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '237788196618055',
@@ -17,7 +18,7 @@
       version    : 'v2.7'
     });
   };
-
+*/
   (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
@@ -66,7 +67,7 @@
         SE.init({
           clientId: 7803,
           key: 'pRT1xPnW4mwwbRB2Gi)ipA((',
-          channelUrl: 'https://appjoin.herokuapp.com/proxy',
+          channelUrl: 'https://appjoin.herokuapp.com/proxy/',
           complete: function (data) {
             document.getElementById('seLoginButton').removeAttribute('disabled');
             document.getElementById('seLoginButton').innerHTML = "Please log in to Stack Exchange";
@@ -162,7 +163,7 @@ console.log(svc.userFB,$rootScope.userFB);
 							 // of the javascript SDK, by addressing issues
 							 // with cross-domain communication in certain browsers.
 
-							channelUrl: 'http://localhost:3000/fb_proxy',
+							channelUrl: 'https://appjoin.herokuapp.com/proxy/fb.html',
 
 							 // Set if you want to check the authentication status
 							 // at the start up of the app
@@ -178,7 +179,7 @@ console.log(svc.userFB,$rootScope.userFB);
 
 							xfbml: true,
 
-							version: 'v2.4'
+							version: 'v2.7'
 						});
 alert('calling sAuth.watchAuthenticationStatusChange()')
 						sAuth.watchAuthenticationStatusChange();

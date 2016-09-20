@@ -10,11 +10,6 @@ Rails.application.routes.draw do
 
   get 't', to: "home#index"
 
-#  get 'proxy', to: "home#proxy"
-
-  get 'fb_proxy', to: "home#fb_proxy"
-
-
   # sessions
 
   post 'login', to: 'sessions#create'
