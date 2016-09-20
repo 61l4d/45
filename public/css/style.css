@@ -1,0 +1,15 @@
+@font-face {
+  font-family: Montserrat-Bold;
+  src: url('../fonts/montserrat-bold-normal.ttf') format('svg');
+}
+
+
+/*********** INDEX PAGE **********/
+
+#logo-index {
+	width: 100px;
+	height 100px;
+	border: 0;
+}
+
+
