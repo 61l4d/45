@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AppJoin</title>
+  <%= csrf_meta_tags %>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="mb-icon.png" type="image/png" />
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <!-- logo -->
+  <iframe id="logo-index" src="images/appjoin_logo.svg"></iframe>
+
+  <!-- app -->
+  <div ng-app="app">
+    <div ng-controller="IndexController as ctrl">
+
+	    <fb:login-button scope="public_profile,user_friends" show-faces="true" max-rows="1" size="large"></fb:login-button>
+
+      <div id="se-login-div">
+        <button id="seLoginButton" ng-click="ctrl.seLogin()" disabled>Loading, please wait...</button>
+      </div>
+
+      <div>{{ ctrl.message }}</div>
+
+      <div id="fb-root"></div>
+
+      <div
+        class="fb-like"
+        data-share="true"
+        data-width="450"
+        data-show-faces="true">
+      </div>
+
+    </div> <!-- ng-controller -->
+  </div> <!-- ng-app -->
+
+  <script src="https://connect.facebook.net/en_US/sdk.js"></script>
+  <script src="js/angular.min.js"></script>
+  <script type='text/javascript' src='https://api.stackexchange.com/js/2.0/all.js'></script>
+  <script type="text/javascript" charset="utf-8">
+    angular
+      .module('app',[])
+      .controller('IndexController', function($http){
+        var ctrl = this;
+
+        // initialize SE login
+        SE.init({
+          clientId: 7803,
+          key: 'pRT1xPnW4mwwbRB2Gi)ipA((',
+          channelUrl: 'https://appjoin.herokuapp.com/proxy/',
+          complete: function (data) {
+            document.getElementById('seLoginButton').removeAttribute('disabled');
+            document.getElementById('seLoginButton').innerHTML = "Please log in to Stack Exchange";
+          }
+        });
+
+        // authenticate SE
+        ctrl.seLogin = function(){
+          SE.authenticate({
+            success: function(data) {
+              console.log(data);
+            },
+            error: function(data) {
+              alert(errorName + '. ' + errorMessage);
+            },
+            scope: [],
+            networkUsers: true
+          });
+        };
+      })
+
+      // https://blog.brunoscopelliti.com/facebook-authentication-in-your-angularjs-web-app/
+			.service('sAuth', ['$rootScope', function($rootScope){
+				var svc = this;
+
+				svc.watchAuthenticationStatusChange = function() {
+alert('svc.watchAuthenticationStatusChange')
+                            // original: auth.authResponseChange
+					FB.Event.subscribe('auth.statusChange', function(res) {
+      console.log(res)
+						if (res.status === 'connected') {
+alert('res.status===connected')
+						  // The user is already logged,
+							// is possible retrieve his personal info
+							svc.getFBUserInfo();
+
+							// This is also the point where you should create a
+							// session for the current user.
+							// For this purpose you can use the data inside the
+							// res.authResponse object.
+
+						}
+						else {
+
+							// The user is not logged to the app, or into Facebook:
+							// destroy the session on the server.
+
+						}
+
+					});
+
+				}
+
+				svc.getFBUserInfo = function() {
+alert('svc.getFBUserInfo')
+					FB.api('/me', function(res) {
+						$rootScope.$apply(function() {
+alert('FB.api(/me')
+							$rootScope.userFB = svc.userFB = res;
+console.log(svc.userFB,$rootScope.userFB);
+						});
+					});
+				}
+
+				svc.logout = function() {
+
+					FB.logout(function(response) {
+						$rootScope.$apply(function() {
+							$rootScope.userFB = svc.userFB = {};
+						});
+					});
+
+				}
+			}])
+
+      // https://blog.brunoscopelliti.com/facebook-authentication-in-your-angularjs-web-app/
+      .run(['$rootScope', '$window', 'sAuth',
+        function($rootScope, $window, sAuth) {
+          $rootScope.userFB = {};
+
+					$window.fbAsyncInit = function() {
+						// Executed when the SDK is loaded
+
+						FB.init({
+
+							 // The app id of the web app;
+							 // To register a new app visit Facebook App Dashboard
+							 // ( https://developers.facebook.com/apps/ )
+
+							appId: '237788196618055',
+
+							 // Adding a Channel File improves the performance
+							 // of the javascript SDK, by addressing issues
+							 // with cross-domain communication in certain browsers.
+
+							channelUrl: 'https://appjoin.herokuapp.com/proxy/fb.html',
+
+							 // Set if you want to check the authentication status
+							 // at the start up of the app
+
+							status: true,
+
+							 // Enable cookies to allow the server to access
+							 // the session
+
+							cookie: false,
+
+							// Parse XFBML
+
+							xfbml: true,
+
+							version: 'v2.7'
+						});
+alert('calling sAuth.watchAuthenticationStatusChange()')
+						sAuth.watchAuthenticationStatusChange();
+					};
+
+ (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+      }]);
+  </script>
+</body>
+</html>
