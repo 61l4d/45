@@ -20,6 +20,6 @@ class LoginController < ApplicationController
   def se_oauth
     redirect_uri = ENV['BASE_URL'] + "callbacks/se"
 
-    redirect_to "https://stackexchange.com/oauth?client_id=#{ENV['SE_CLIENT_ID']}&scope=&redirect_uri=#{redirect_uri}&state=#{session[:state]}"
+    redirect_to "https://stackexchange.com/oauth?client_id=#{ENV['SE_CLIENT_ID']}&scope=&network_users=true&redirect_uri=#{redirect_uri}&state=#{session[:state]}"
   end
 end

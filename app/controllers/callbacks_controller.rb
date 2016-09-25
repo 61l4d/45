@@ -1,4 +1,7 @@
 class CallbacksController < ApplicationController
+
+  # FB login
+
   def fb
     # state mismatch
     if session[:state].nil? or params[:state] != session[:state]
@@ -37,6 +40,9 @@ class CallbacksController < ApplicationController
     end
   end
 
+
+  # SE login
+  
   def se
     # state mismatch
     if session[:state].nil? or params[:state] != session[:state]
@@ -64,7 +70,7 @@ class CallbacksController < ApplicationController
                  }
 
       body = response.body
-      
+
       # access token missing
       raise "Stack Exchange access token seems to be missing. Response: " + response.inspect if not body['access_token']
 

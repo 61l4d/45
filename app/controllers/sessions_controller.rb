@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def create
-    raise session[:se] 
+    raise session[:fb].inspect 
   end
 
   def destroy
