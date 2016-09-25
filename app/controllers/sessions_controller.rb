@@ -1,6 +1,7 @@
-class SessionController < ApplicationController
+class SessionsController < ApplicationController
 
   def create
+    raise session[:se] 
   end
 
   def destroy

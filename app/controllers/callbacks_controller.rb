@@ -33,7 +33,7 @@ class CallbacksController < ApplicationController
       session[:fb] = body
      
       # redirect to se login
-      redirect_to ENV['BASE_URL'] + "login/se"
+      redirect_to ENV['BASE_URL'] + "login/redirect"
     end
   end
 
@@ -70,9 +70,8 @@ class CallbacksController < ApplicationController
 
       session[:se] = body
      
-raise session[:se].inspect
       # redirect to index page
-      redirect_to 'home/index'
+      redirect_to ENV['BASE_URL'] + "login"
     end
   end
 end

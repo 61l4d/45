@@ -14,16 +14,18 @@ Rails.application.routes.draw do
 
   # home
 
-  get 't', to: "login#index"
+  get 't', to: "home#welcome"
 	get 't1', to: "home#index"
 
   # logins
 
 # get 'login', to: 'login#index'
 
-  get 'login/fb', to: 'login#fb'
+  get 'login/fb_oauth', to: 'login#fb_oauth'
 
-  get 'login/se', to: 'login#se'
+  get 'login/redirect', to: 'login#redirect'
+
+  get 'login/se_oauth', to: 'login#se_oauth'
 
 
   # callbacks
@@ -35,7 +37,7 @@ Rails.application.routes.draw do
 
   # sessions
 
-  post 'login', to: 'sessions#create'
+  get 'login', to: 'sessions#create'
 
   get 'logout', to: 'sessions#destroy'
 end
