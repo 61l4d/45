@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+	# http://stackoverflow.com/questions/25841377/rescue-from-actioncontrollerroutingerror-in-rails4
+	unless Rails.application.config.consider_all_requests_local
+    # having created corresponding controller and action
+    get '*not_found', to: 'errors#error_404'
+  end
+
   # root
 
 	root to: 'home#parked'
@@ -8,10 +14,12 @@ Rails.application.routes.draw do
 
   # home
 
-  get 't', to: "login#fb"
-
+  get 't', to: "login#index"
+	get 't1', to: "home#index"
 
   # logins
+
+# get 'login', to: 'login#index'
 
   get 'login/fb', to: 'login#fb'
 

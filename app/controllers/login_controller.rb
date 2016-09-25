@@ -1,6 +1,9 @@
 class LoginController < ApplicationController
   require 'securerandom'
 
+  def index
+  end
+
   def fb
     state = SecureRandom.hex
 
