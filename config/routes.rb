@@ -8,7 +8,22 @@ Rails.application.routes.draw do
 
   # home
 
-  get 't', to: "home#index"
+  get 't', to: "login#fb"
+
+
+  # logins
+
+  get 'login/fb', to: 'login#fb'
+
+  get 'login/se', to: 'login#se'
+
+
+  # callbacks
+  
+  get 'callbacks/fb', to: 'callbacks#fb'
+
+  get 'callbacks/se', to: 'callbacks#se'
+
 
   # sessions
 
