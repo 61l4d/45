@@ -36,7 +36,7 @@ class CallbacksController < ApplicationController
       session[:fb] = body
      
       # redirect to se login
-      timed_redirect(message: "Redirecting to SE login...", location: "login/se_oauth")
+      timed_redirect(message: "Redirecting to SE login...", location: "login/se_oauth", milliseconds: 3000)
     end
   end
 

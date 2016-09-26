@@ -28,7 +28,7 @@
     document.getElementById('message').innerHTML = params['m'];
 
     if (params['u'] !== undefined){
-      setTimeout(function(){ window.location = params['u'] }, 3000);
+      setTimeout(function(){ window.location = params['u'] }, parseInt(params['t']));
     }
   </script>
 </body>

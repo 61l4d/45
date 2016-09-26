@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
 
 	protected
 
-  def timed_redirect(message: "", location: "")
-    redirect_to ENV['BASE_URL'] + "redirect.html?m=#{URI::encode(message.reverse)}&u=#{URI::encode(location.reverse)}"
+  def timed_redirect(message: "", location: "", milliseconds: 3000)
+    redirect_to ENV['BASE_URL'] + "redirect.html?m=#{URI::encode(message.reverse)}&u=#{URI::encode(location.reverse)}&t=#{milliseconds.to_s.reverse}"
   end
 
   def render_404
