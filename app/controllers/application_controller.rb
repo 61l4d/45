@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
 
 	protected
 
-  def custom_encode(s)
-    return URI::encode(s.reverse)
+  def timed_redirect(message: "", location: "")
+    redirect_to ENV['BASE_URL'] + "redirect.html?m=#{URI::encode(message.reverse)}&u=#{URI::encode(location.reverse)}"
   end
 
   def render_404
