@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
 
 	protected
 
+  def custom_encode(s)
+    return URI::encode(s.reverse)
+  end
+
   def render_404
     respond_to do |format|
       format.html { render template: 'errors/not_found', status: 404 }

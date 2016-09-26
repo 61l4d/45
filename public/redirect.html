@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AppJoin</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="/mb-icon.png" type="image/png" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+  <!-- logo -->
+  <iframe id="logo-index" src="/images/appjoin_logo.svg"></iframe>
+
+  <div id="message"><div>
+
+  <script type="text/javascript">
+    function decode(s){
+      return decodeURI(s).split('').reverse().join('');
+    }
+
+    var params = {},
+        arr = window.location.search.replace(/\?/g,'').split('&');
+
+    for (var i=0; i<arr.length; i++){
+      var param = arr[i].split('=').map(function(x){ return decode(x); });
+      params[param[0]] = param[1];
+    }
+
+    document.getElementById('message').innerHTML = params['m'];
+
+    if (params['u'] !== undefined){
+      setTimeout(function(){ window.location = params['u'] }, 3000);
+    }
+  </script>
+</body>
+</html>

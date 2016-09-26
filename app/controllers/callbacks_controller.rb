@@ -36,7 +36,7 @@ class CallbacksController < ApplicationController
       session[:fb] = body
      
       # redirect to se login
-      redirect_to ENV['BASE_URL'] + "login/redirect"
+      redirect_to ENV['BASE_URL'] + "redirect.html?m=#{custom_encode('Redirecting to SE login...')}&u=#{custom_encode('login/se_oauth')}"
     end
   end
 
