@@ -1,7 +1,8 @@
 class SessionsController < ApplicationController
 
-  def create
-    raise session[:fb].inspect 
+  def create_account
+    # retrieve fb and se user_id's
+    raise session.inspect
   end
 
   def destroy

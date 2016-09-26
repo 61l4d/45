@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
   # sessions
 
-  get 'login', to: 'sessions#create'
+  get 'login', to: 'sessions#create_account'
 
   get 'logout', to: 'sessions#destroy'
 end
