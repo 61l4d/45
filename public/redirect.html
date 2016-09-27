@@ -25,10 +25,16 @@
       params[param[0]] = param[1];
     }
 
-    document.getElementById('message').innerHTML = params['m'];
+    // parse boolean
+    params['a'] = JSON.parse(params['a']);
 
-    if (params['u'] !== undefined){
-      setTimeout(function(){ window.location = params['u'] }, parseInt(params['t']));
+    if (!params['a'] && params['u'] !== undefined){
+      document.getElementById('message').innerHTML = params['m'];
+      setTimeout(function(){ window.location = params['u']; }, parseInt(params['t']));
+
+    } else if (params['a']){
+      alert(params['m']);
+      window.location = params['u'];
     }
   </script>
 </body>

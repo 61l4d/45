@@ -36,7 +36,7 @@ class CallbacksController < ApplicationController
       session[:fb] = body
      
       # redirect to se login
-      timed_redirect(message: "Redirecting to SE login...", location: "login/se_oauth", milliseconds: 3000)
+      timed_redirect(message: "Redirecting to SE login...", location: "login/se_oauth", milliseconds: 2000)
     end
   end
 
@@ -74,7 +74,7 @@ class CallbacksController < ApplicationController
       # access token missing
       raise "Stack Exchange access token seems to be missing. Response: " + response.inspect if not body['access_token']
 
-      session[:se] = body
+      session[:se] = Rack::Utils.parse_query(body)
      
       # redirect to index page
       redirect_to ENV['BASE_URL'] + "login"
