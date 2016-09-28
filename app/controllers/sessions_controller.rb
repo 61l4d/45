@@ -17,10 +17,10 @@ class SessionsController < ApplicationController
       return timed_redirect(message: "Oops, something went wrong during logins. Redirecting to welcome page...", location: "t", alert: true) 
     end
 
-    fb_id = fb_response.body["id"]
-    se_id = se_response.body["items"][0]["account_id"]
+    session[:fb]["fb_id"] = fb_response.body["id"]
+    session[:se]["se_id"] = se_response.body["items"][0]["account_id"]
     
-    raise [fb_id,se_id].inspect
+    raise [session[:fb],session[:se]].inspect
   end
 
   def destroy

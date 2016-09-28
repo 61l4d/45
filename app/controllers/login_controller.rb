@@ -8,7 +8,7 @@ class LoginController < ApplicationController
 
     redirect_uri = ENV['BASE_URL'] + "callbacks/fb"
 
-    redirect_to "https://www.facebook.com/v2.7/dialog/oauth?client_id=#{ENV['FB_CLIENT_ID']}&redirect_uri=#{redirect_uri}&state=#{state}"
+    redirect_to "https://www.facebook.com/v2.7/dialog/oauth?client_id=#{ENV['FB_CLIENT_ID']}&redirect_uri=#{redirect_uri}&scope=user_friends&state=#{state}"
   end
 
   def redirect
