@@ -1,5 +1,17 @@
 class SessionsController < ApplicationController
 
+  def info
+    error_message = ""
+    error_message += "fb session undefined. " if session[:fb].nil?
+    error_message += "se session undefined." if session[:se].nil?
+
+    if not error_message.empty?
+      render json: {error: {message: error_message}}, status: 200
+    else
+      render json: {fb_data: session[:fb], se_data: session[:se]}, status: 200
+    end
+  end
+
   def create_account
     # retrieve fb and se user_id's
     fb_response = Unirest.get "https://graph.facebook.com/me",
@@ -20,7 +32,7 @@ class SessionsController < ApplicationController
     session[:fb]["fb_id"] = fb_response.body["id"]
     session[:se]["se_id"] = se_response.body["items"][0]["account_id"]
     
-    raise [session[:fb],session[:se]].inspect
+    redirect_to '/t1'
   end
 
   def destroy

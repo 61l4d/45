@@ -35,6 +35,8 @@ Rails.application.routes.draw do
 
 
   # sessions
+	
+	get 'sessions/info', to: 'sessions#info'
 
   get 'login', to: 'sessions#create_account'
 
