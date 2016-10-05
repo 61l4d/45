@@ -17,13 +17,12 @@ Rails.application.routes.draw do
   get 't', to: "home#welcome"
 	get 't1', to: "home#index"
 
+
   # logins
 
-# get 'login', to: 'login#index'
+  get 'login/init', to: 'login#init'
 
   get 'login/fb_oauth', to: 'login#fb_oauth'
-
-  get 'login/redirect', to: 'login#redirect'
 
   get 'login/se_oauth', to: 'login#se_oauth'
 
