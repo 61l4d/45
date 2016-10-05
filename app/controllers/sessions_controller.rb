@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
     session[:fb]["fb_id"] = fb_response.body["id"]
     session[:se]["se_id"] = se_response.body["items"][0]["account_id"]
     
-    raise [session[:fb],session[:se]].inspect
+    redirect_to '/t1'
   end
 
   def destroy
