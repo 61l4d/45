@@ -6,8 +6,7 @@ class LoginController < ApplicationController
 
   def initialize
     # redirect to fb login
-    redirect_to '/redirect.html' 
-#    timed_redirect(message: "Redirecting to FB login...", location: "login/fb_oauth", milliseconds: 2000)
+    timed_redirect(message: "Redirecting to FB login...", location: "login/fb_oauth", milliseconds: 2000)
   end
 
   def fb_oauth
