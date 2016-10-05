@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   # logins
 
 # get 'login', to: 'login#index'
-  get 'login/initialize', to: 'login#initialize'
 
   get 'login/fb_oauth', to: 'login#fb_oauth'
 

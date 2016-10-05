@@ -20,13 +20,5 @@
   <script type="text/javascript" src="js/angular.min.js"></script>
   <script type="text/javascript" src="js/app/app.js"></script>
 	<script type="text/javascript" src="js/app/controllers/IndexController.js"></script>
-
-  <script type="text/javascript">
-    // session data
-    var session = {};
-    session.fb = JSON.parse('<%= @fb_data.html_safe %>');
-    session.se = JSON.parse('<%= @se_data.html_safe %>');
-    console.log(session);
-  </script>
 </body>
 </html>
