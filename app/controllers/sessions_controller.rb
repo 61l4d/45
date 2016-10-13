@@ -16,7 +16,15 @@ class SessionsController < ApplicationController
     else
       # find user
       current_user = User.find_by(fb_id: session[:fb]["fb_id"])
-      # zzz if current_user.nil?
+      if current_user.nil?
+        current_user = User.create(
+          fb_id: session[:fb]["fb_id"],
+          se_id: session[:se]["se_id"],
+          ip_addresses: {user_ip.to_s => [Time.now.to_s]},
+          geolocations: [geolocation],
+          preferences: {}
+        )
+      end
 
       render json: {fb_data: session[:fb], se_data: session[:se]}, status: 200
     end
