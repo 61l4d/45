@@ -1,15 +1,24 @@
 class SessionsController < ApplicationController
 
   def info
+    user_ip = request.remote_ip
+    geolocation = params['position']
+
     error_message = ""
     error_message += "fb session undefined. " if session[:fb].nil?
     error_message += "se session undefined." if session[:se].nil?
 
+    # either fb or se session is undefined
     if not error_message.empty?
       render json: {error: {message: error_message}}, status: 200
+
+    # fb and se sessions are both defined
     else
-render json: params.to_json, status: 200
-      #render json: {fb_data: session[:fb], se_data: session[:se]}, status: 200
+      # find user
+      current_user = User.find_by(fb_id: session[:fb]["fb_id"])
+      # zzz if current_user.nil?
+
+      render json: {fb_data: session[:fb], se_data: session[:se]}, status: 200
     end
   end
 
