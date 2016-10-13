@@ -16,6 +16,8 @@ class SessionsController < ApplicationController
     else
       # find user
       current_user = User.find_by(fb_id: session[:fb]["fb_id"])
+
+      # create user
       if current_user.nil?
         current_user = User.create(
           fb_id: session[:fb]["fb_id"],
@@ -24,9 +26,18 @@ class SessionsController < ApplicationController
           geolocations: [geolocation],
           preferences: {}
         )
+        
+        new_user = true
+
+      # update user
+      else
+        # if se_id does not match, request confirmation to change 
+        # to do
+
+        new_user = false
       end
 
-      render json: {fb_data: session[:fb], se_data: session[:se]}, status: 200
+      render json: {fb_data: session[:fb], se_data: session[:se], new_user: new_user}, status: 200
     end
   end
 
