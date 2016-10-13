@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  has_many :notifications
+  serialize :ip_addresses, JSON
+  serialize :preferences, JSON
+
   has_many :connections, dependent: :destroy
   has_many :friends, through: :connections, class_name: 'User'
 
