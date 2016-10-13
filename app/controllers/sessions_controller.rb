@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
   def info
+  raise params.inspect
     error_message = ""
     error_message += "fb session undefined. " if session[:fb].nil?
     error_message += "se session undefined." if session[:se].nil?

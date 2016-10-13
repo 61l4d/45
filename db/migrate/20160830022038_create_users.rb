@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
 			t.string :fb_id
       t.string :se_id
       t.text :ip_addresses
+      t.text :geolocations
       t.text :preferences
 
       t.timestamps

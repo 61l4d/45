@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   serialize :ip_addresses, JSON
+  serialize :geolocations, JSON
   serialize :preferences, JSON
 
   has_many :connections, dependent: :destroy
