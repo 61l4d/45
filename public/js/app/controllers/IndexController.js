@@ -1,28 +1,49 @@
-function IndexController(SessionService){
+function IndexController(SessionService,$q,$window){
   var ctrl = this;
 
   ctrl.test = "hello";
 
-  // get session info
-  SessionService.getSessionInfo().then(function(resp){
-    var data = resp.data;
+  // post geolocation and get session info
 
-    if (data.error !== undefined){
-      alert (
-          'There was an error retrieving session information: \n'
-        + data.error.message
-        + '\n\nClick OK to return to login page.'
+  var asyncGeolocationPermission = function (){
+    var deferred = $q.defer();
+
+    var getLocation = $window.navigator.geolocation.getCurrentPosition(
+        // success
+        function (position){
+          deferred.resolve(position.coords);
+        },
+
+        // error
+        function (){ 
+          deferred.resolve(null); 
+        }
       );
-      
-      window.location = "/t";
+    
+    return deferred.promise;
+  };
 
-    } else {
-      ctrl.session = {
-        fb: data.fb_data,
-        se: data.se_data
-      };
-console.log(ctrl.session);
-    }
+  asyncGeolocationPermission().then(function(location_data){
+    SessionService.postSessionInfo(location_data).then(function(resp){
+      var data = resp.data;
+  console.log(data)
+      if (data.error !== undefined){
+        alert (
+            'There was an error retrieving session information: \n'
+          + data.error.message
+          + '\n\nClick OK to return to login page.'
+        );
+        
+        window.location = "/t";
+
+      } else {
+        ctrl.session = {
+          fb: data.fb_data,
+          se: data.se_data
+        };
+  console.log(ctrl.session);
+      }
+    });
   });
 }
 

@@ -1,8 +1,8 @@
 function SessionService($http){
   var svc = this;
 
-  svc.getSessionInfo = function(){
-    return $http.get('/sessions/info');
+  svc.postSessionInfo = function(data){
+    return $http.post('/sessions/info',data);
   }
 }
 

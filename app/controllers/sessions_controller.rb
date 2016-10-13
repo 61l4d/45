@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
 
   def info
-  raise params.inspect
     error_message = ""
     error_message += "fb session undefined. " if session[:fb].nil?
     error_message += "se session undefined." if session[:se].nil?
@@ -9,7 +8,8 @@ class SessionsController < ApplicationController
     if not error_message.empty?
       render json: {error: {message: error_message}}, status: 200
     else
-      render json: {fb_data: session[:fb], se_data: session[:se]}, status: 200
+render json: params.to_json, status: 200
+      #render json: {fb_data: session[:fb], se_data: session[:se]}, status: 200
     end
   end
 
