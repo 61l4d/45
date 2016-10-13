@@ -1,0 +1,8 @@
+#!/bin/bash
+
+heroku config:get BASE_URL -s  >> .env
+heroku config:get FB_CLIENT_ID -s  >> .env
+heroku config:get FB_CLIENT_SECRET -s  >> .env
+heroku config:get SE_CLIENT_ID -s  >> .env
+heroku config:get SE_CLIENT_SECRET -s  >> .env
+heroku config:get SE_CLIENT_KEY -s  >> .env
