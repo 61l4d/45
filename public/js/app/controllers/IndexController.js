@@ -1,29 +1,9 @@
-function IndexController(SessionService,$q,$window){
+function IndexController(SessionService,$window){
   var ctrl = this;
 
   ctrl.test = "hello";
-
-  // post geolocation and get session info
-
-  var asyncGeolocationPermission = function (){
-    var deferred = $q.defer();
-
-    var getLocation = $window.navigator.geolocation.getCurrentPosition(
-        // success
-        function (position){
-          deferred.resolve(position.coords);
-        },
-
-        // error
-        function (){ 
-          deferred.resolve(null); 
-        }
-      );
     
-    return deferred.promise;
-  };
-
-  asyncGeolocationPermission().then(function(location_data){
+  var ctrl.postSessionInfo = function(location_data) {
     SessionService.postSessionInfo(location_data).then(function(resp){
       var data = resp.data;
   console.log(data)
@@ -44,7 +24,21 @@ function IndexController(SessionService,$q,$window){
   console.log(ctrl.session);
       }
     });
-  });
+  }
+
+  // post geolocation and get session info
+
+    var getLocation = $window.navigator.geolocation.getCurrentPosition(
+        // success
+        function (position){
+          deferred.resolve(position.coords);
+        },
+
+        // error
+        function (){ 
+          deferred.resolve(null); 
+        }
+      );
 }
 
 angular
