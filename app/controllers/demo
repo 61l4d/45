@@ -1,0 +1,167 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "316",
+               "short_name" : "316",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "West 98th Street",
+               "short_name" : "W 98th St",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Upper West Side",
+               "short_name" : "UWS",
+               "types" : [ "neighborhood", "political" ]
+            },
+            {
+               "long_name" : "Manhattan",
+               "short_name" : "Manhattan",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "New York",
+               "short_name" : "New York",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "New York County",
+               "short_name" : "New York County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "New York",
+               "short_name" : "NY",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "10025",
+               "short_name" : "10025",
+               "types" : [ "postal_code" ]
+            },
+            {
+               "long_name" : "5559",
+               "short_name" : "5559",
+               "types" : [ "postal_code_suffix" ]
+            }
+         ],
+         "formatted_address" : "316 W 98th St, New York, NY 10025, USA",
+         "geometry" : {
+            "location" : {
+               "lat" : 40.796745,
+               "lng" : -73.973309
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 40.7980939802915,
+                  "lng" : -73.97196001970849
+               },
+               "southwest" : {
+                  "lat" : 40.79539601970851,
+                  "lng" : -73.9746579802915
+               }
+            }
+         },
+         "place_id" : "ChIJo_T66Cj2wokRWrx6VDp5LRQ",
+         "types" : [ "street_address" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "New York",
+               "short_name" : "New York",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "New York",
+               "short_name" : "NY",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "New York, NY, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 40.9152555,
+                  "lng" : -73.70027209999999
+               },
+               "southwest" : {
+                  "lat" : 40.496044,
+                  "lng" : -74.255735
+               }
+            },
+            "location" : {
+               "lat" : 40.7127837,
+               "lng" : -74.0059413
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 40.9152555,
+                  "lng" : -73.70027209999999
+               },
+               "southwest" : {
+                  "lat" : 40.496044,
+                  "lng" : -74.255735
+               }
+            }
+         },
+         "place_id" : "ChIJOwg_06VPwokRYv534QaPC8g",
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "United States",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 71.3867745,
+                  "lng" : -66.9502861
+               },
+               "southwest" : {
+                  "lat" : 18.910677,
+                  "lng" : 172.4458955
+               }
+            },
+            "location" : {
+               "lat" : 37.09024,
+               "lng" : -95.712891
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 49.38,
+                  "lng" : -66.94
+               },
+               "southwest" : {
+                  "lat" : 25.82,
+                  "lng" : -124.39
+               }
+            }
+         },
+         "place_id" : "ChIJCzYy5IS16lQRQrfeQ5K5Oxw",
+         "types" : [ "country", "political" ]
+      }
+   ],
+   "status" : "OK"
+}
