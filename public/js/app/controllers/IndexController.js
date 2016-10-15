@@ -1,7 +1,8 @@
 function IndexController(SessionService,$window){
   var ctrl = this;
 
-  ctrl.test = "hello";
+  ctrl.message = "hello";
+  ctrl.buttonText = "Submit";
     
   ctrl.postSessionInfo = function(location_data){
     SessionService.postSessionInfo(location_data).then(function(resp){
@@ -18,7 +19,8 @@ console.log(data)
 
       // confirmation is needed to change linked se account 
       } else if (data.confirm_update_se_account){
-        
+        ctrl.message = 'SE user # ' + data.confirm_update_se_account + ' is linked with this account, but you signed in with user # ' + data.se_data.se_id + '<br>Type "yes" and below and click "Update" to update our records to the new SE account.';
+        ctrl.buttonText = 'Update';
 
       } else {
         ctrl.session = {
