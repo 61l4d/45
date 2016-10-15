@@ -20,9 +20,12 @@ class SessionsController < ApplicationController
       # find user
       current_user = User.find_by(fb_id: session[:fb]["fb_id"])
 
+      confirm_update_se_account = false
+      new_user = false
+
       # create user
       if current_user.nil?
-        current_user = User.create(
+        current_user = User.new(
           fb_id: session[:fb]["fb_id"],
           se_id: session[:se]["se_id"],
           ip_addresses: {user_ip.to_s => [Time.now.to_s]},
@@ -30,21 +33,30 @@ class SessionsController < ApplicationController
           preferences: {}
         )
         
-        new_user = true
+        if current_user.save
+          new_user = true
 
-      # update user
+        # if there are user validation errors
+        else 
+          return render json: {error: {message: current_user.errors.messages.inspect}}, status: 200
+        end
+
       else
         # if se_id does not match, request confirmation to change 
-        # to do
-
+        confirm_update_se_account = current_user.se_id if session[:se]["se_id"].to_s != current_user.se_id
         new_user = false
       end
 
-      render json: {fb_data: session[:fb], se_data: session[:se], new_user: new_user}, status: 200
+      render json: {
+        fb_data: session[:fb], 
+        se_data: session[:se], 
+        new_user: new_user, 
+        confirm_update_se_account: confirm_update_se_account
+      }, status: 200
     end
   end
 
-  def create_account
+  def get_outside_accounts
     # retrieve fb and se user_id's
     fb_response = Unirest.get "https://graph.facebook.com/me",
                   parameters: {

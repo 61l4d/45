@@ -6,7 +6,7 @@ function IndexController(SessionService,$window){
   ctrl.postSessionInfo = function(location_data){
     SessionService.postSessionInfo(location_data).then(function(resp){
       var data = resp.data;
- 
+console.log(data) 
       if (data.error !== undefined){
         alert (
             'There was an error retrieving session information: \n'
@@ -16,12 +16,15 @@ function IndexController(SessionService,$window){
         
         window.location = "/t";
 
+      // confirmation is needed to change linked se account 
+      } else if (data.confirm_update_se_account){
+        
+
       } else {
         ctrl.session = {
           fb: data.fb_data,
           se: data.se_data
         };
-  console.log(ctrl.session);
       }
     });
   };

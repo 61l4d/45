@@ -20,11 +20,11 @@ Rails.application.routes.draw do
 
   # logins
 
-  get 'login/init', to: 'login#init'
+  get 'login/init', to: 'logins#init'
 
-  get 'login/fb_oauth', to: 'login#fb_oauth'
+  get 'login/fb_oauth', to: 'logins#fb_oauth'
 
-  get 'login/se_oauth', to: 'login#se_oauth'
+  get 'login/se_oauth', to: 'logins#se_oauth'
 
 
   # callbacks
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 	
 	post 'sessions/info', to: 'sessions#info'
 
-  get 'login', to: 'sessions#create_account'
+  get 'login', to: 'sessions#get_outside_accounts'
 
   get 'logout', to: 'sessions#destroy'
 end
