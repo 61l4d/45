@@ -50,6 +50,7 @@ class SessionsController < ApplicationController
       render json: {
         fb_data: session[:fb], 
         se_data: session[:se], 
+        geolocation: geolocation,
         new_user: new_user, 
         confirm_update_se_account: confirm_update_se_account
       }, status: 200
