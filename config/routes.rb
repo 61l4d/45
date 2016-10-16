@@ -41,4 +41,9 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#get_outside_accounts'
 
   get 'logout', to: 'sessions#destroy'
+
+
+  # interactions
+
+  post 'update', to: 'interactions#update'
 end

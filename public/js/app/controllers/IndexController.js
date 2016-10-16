@@ -1,11 +1,10 @@
-function IndexController(SessionService,$window,$sce){
+function IndexController(SessionService,InteractionService,$window,$sce){
   var ctrl = this;
 
   ctrl.messageTitle = "A message from AppJoin:";
   ctrl.message = $sce.trustAsHtml("hello");
   ctrl.buttonText = "Send";
-  ctrl.buttonFunction = function(){};
-  ctrl.buttonClick = function(){ return ctrl.buttonFunction(); };
+  // ctrl.buttonClick = function
     
   // retrieve session information and post location
   ctrl.postSessionInfo = function(location_data){
@@ -25,7 +24,17 @@ console.log(data)
       } else if (data.confirm_update_se_account){
         ctrl.message = $sce.trustAsHtml('SE user <a href="http://stackexchange.com/users/' + data.confirm_update_se_account + '" target="_blank">' + data.confirm_update_se_account + '</a> is linked with this account, but you signed in with SE user <a href="http://stackexchange.com/users/' + data.se_data.se_id + '" target="_blank">' + data.se_data.se_id + '</a>. Please type "yes" below to update our records to the new SE account, or type "no" to be redirected back to login. Click "Send" when you\'re ready.');
 
-        ctrl.buttonFunction = function(){ alert('buttonFunction test'); };
+        ctrl.buttonClick = function(){
+          var postData = {
+            interaction: {
+              message: 'interaction test'
+            }
+          };
+
+          InteractionService.update(postData).then(function(resp){
+            console.log(resp.data);
+          });
+        };
 
       } else {
         ctrl.session = {

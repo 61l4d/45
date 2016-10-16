@@ -42,6 +42,9 @@ class SessionsController < ApplicationController
         end
 
       else
+        # save ip and geolocation
+        # to do...
+
         # if se_id does not match, request confirmation to change 
         confirm_update_se_account = current_user.se_id if session[:se]["se_id"].to_s != current_user.se_id
         new_user = false
