@@ -13,7 +13,8 @@
 
   <div ng-app="app">
     <div ng-controller="IndexController as ctrl">
-      <div id="message-div"> {{ ctrl.message }} </div>
+      <div id="message-div-title">{{ ctrl.messageTitle }}<div>
+      <div id="message-div" ng-bind-html="ctrl.message"></div>
       <div id="inputi-div">
         <input type="text" ng-model="ctrl.input" /> 
         <button ng-click="ctrl.buttonClick()" >{{ ctrl.buttonText }}</button>
