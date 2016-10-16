@@ -1,8 +1,7 @@
 function IndexController(SessionService,InteractionService,$window,$sce){
   var ctrl = this;
 
-  ctrl.messageTitle = "A message from AppJoin:";
-  ctrl.message = $sce.trustAsHtml("hello");
+  ctrl.messageTitle = "Message from AppJoin:";
   ctrl.buttonText = "Send";
   // ctrl.buttonClick = function
     
@@ -22,25 +21,46 @@ console.log(data)
 
       // confirmation is needed to change linked se account 
       } else if (data.confirm_update_se_account){
-        ctrl.message = $sce.trustAsHtml('SE user <a href="http://stackexchange.com/users/' + data.confirm_update_se_account + '" target="_blank">' + data.confirm_update_se_account + '</a> is linked with this account, but you signed in with SE user <a href="http://stackexchange.com/users/' + data.se_data.se_id + '" target="_blank">' + data.se_data.se_id + '</a>. Please type "yes" below to update our records to the new SE account, or type "no" to be redirected back to login. Click "Send" when you\'re ready.');
+        ctrl.message = $sce.trustAsHtml('SE user <a href="http://stackexchange.com/users/' + data.confirm_update_se_account + '" target="_blank">' + data.confirm_update_se_account + '</a> is linked with this account, but you signed in with SE user <a href="http://stackexchange.com/users/' + data.se_data.se_id + '" target="_blank">' + data.se_data.se_id + '</a>. Please type "yes" below to update our records to the new SE account, or type "no" to be redirected back to login. Click "Send" when you\'re ready. Please note that if you are logged into SE through StackExchange OpenID you must log out of both Stack Exchange (<a href="https://stackexchange.com/users/logout" target="_blank">https://stackexchange.com/users/logout</a>) and Stack Exchange OpenId here: <a href="https://openid.stackexchange.com/user" target="_blank">https://openid.stackexchange.com/user</a> or clear the browser data to be able to log in as a new user to StackExchange.');
 
         ctrl.buttonClick = function(){
-          var postData = {
-            interaction: {
-              message: 'interaction test'
-            }
-          };
+          var input = ctrl.input.replace(/^\s+|\s+$/i,'').toLowerCase();
 
-          InteractionService.update(postData).then(function(resp){
-            console.log(resp.data);
-          });
+          if (input === 'yes'){
+            var postData = {
+              interaction: {
+                command: 'update se account',
+                parameters: []
+              }
+            };
+
+            InteractionService.update(postData).then(function(resp){
+console.log(resp.data);
+              var data = resp.data;
+
+              if (data.error !== undefined){
+                alert(data.error.message);
+              
+              } else {
+                ctrl.message = $sce.trustAsHtml(data.message);
+                ctrl.input = '';
+                ctrl.buttonClick = null;
+              }
+            });
+
+          } else if (input === 'no'){
+            $window.location = '/t';
+          }
         };
 
+      // regular login without se update or error
       } else {
         ctrl.session = {
           fb: data.fb_data,
           se: data.se_data
         };
+
+        ctrl.message = $sce.trustAsHtml("Welcome " + (data.new_user_created ? '' : 'back ') + ctrl.session.fb.name + '!');
       }
     });
   };

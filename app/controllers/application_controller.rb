@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
 
 	protected
 
+  def current_user
+    current_user = User.find_by(fb_id: session[:fb]["fb_id"]) if session[:fb]
+  end
+
   def timed_redirect(message: "", location: "", milliseconds: 3000, alert: false)
     redirect_to ENV['BASE_URL'] + "redirect.html?m=#{URI::encode(message.reverse)}&u=#{URI::encode(location.reverse)}&a=#{alert.to_s.reverse}&t=#{milliseconds.to_s.reverse}"
   end

@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     geolocation = params['position']
 
     # https://maps.googleapis.com/maps/api/geocode/json?latlng=40.796695899999996,-73.9734577&result_type=street_address|locality|country&key=ENV['GOOGLE_API_KEY']
-    # see demo file in controllers folder
+    # see google_geocode_demo file in controllers folder
 
     error_message = ""
     error_message += "fb session undefined. " if session[:fb].nil?
@@ -17,15 +17,12 @@ class SessionsController < ApplicationController
 
     # fb and se sessions are both defined
     else
-      # find user
-      current_user = User.find_by(fb_id: session[:fb]["fb_id"])
-
       confirm_update_se_account = false
-      new_user = false
+      new_user_created = false
 
       # create user
       if current_user.nil?
-        current_user = User.new(
+        new_user = User.new(
           fb_id: session[:fb]["fb_id"],
           se_id: session[:se]["se_id"],
           ip_addresses: {user_ip.to_s => [Time.now.to_s]},
@@ -33,12 +30,12 @@ class SessionsController < ApplicationController
           preferences: {}
         )
         
-        if current_user.save
-          new_user = true
+        if new_user.save
+          new_user_created = true
 
         # if there are user validation errors
         else 
-          return render json: {error: {message: current_user.errors.messages.inspect}}, status: 200
+          return render json: {error: {message: new_user.errors.messages.inspect}}, status: 200
         end
 
       else
@@ -47,14 +44,13 @@ class SessionsController < ApplicationController
 
         # if se_id does not match, request confirmation to change 
         confirm_update_se_account = current_user.se_id if session[:se]["se_id"].to_s != current_user.se_id
-        new_user = false
       end
 
       render json: {
         fb_data: session[:fb], 
         se_data: session[:se], 
         geolocation: geolocation,
-        new_user: new_user, 
+        new_user_created: new_user_created, 
         confirm_update_se_account: confirm_update_se_account
       }, status: 200
     end
@@ -78,6 +74,7 @@ class SessionsController < ApplicationController
     end
 
     session[:fb]["fb_id"] = fb_response.body["id"]
+		session[:fb]["name"] = fb_response.body["name"]
     session[:se]["se_id"] = se_response.body["items"][0]["account_id"]
     
     redirect_to '/t1'

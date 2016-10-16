@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   end
 
   def welcome
+    session.clear
   end
 
   def parked
