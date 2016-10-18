@@ -13,14 +13,47 @@
 
   <div ng-app="app">
     <div ng-controller="IndexController as ctrl">
+
+			<!-- message and input -->
       <div id="message-div-title">{{ ctrl.messageTitle }}<div>
       <div id="message-div" ng-bind-html="ctrl.message"></div>
-      <div id="inputi-div">
+      <div id="input-div">
         <input type="text" ng-model="ctrl.input" /> 
-        <button ng-click="ctrl.buttonClick()" >{{ ctrl.buttonText }}</button>
-      </div>
+        <button ng-click="ctrl.buttonClick()" ng-disabled="!ctrl.inputRequested">{{ ctrl.buttonText }}</button>
+      </div><!-- message and input -->
+
+			<!-- user location -->
+      <div id="user-location-div">
+				<div>My Location (Optional, enables other users to find you by location)</div>
+        Region&raquo; 
+				<select 
+					ng-model="ctrl.region" 
+					ng-change="ctrl.setRegion()" 
+					ng-options="region for region in ctrl.regions"
+					size="1">
+				</select>
+
+				Country&raquo; 
+				<select 
+					ng-disabled="!ctrl.region"
+					ng-model="ctrl.country"
+          ng-change="ctrl.setCountry()"
+					ng-options="country for country in ctrl.countries">
+					size="1" 
+        </select>
+
+				City/State&raquo; 
+				<select size="1" 
+					ng-disabled="!ctrl.region || !ctrl.country"
+					ng-model="ctrl.cityState"
+          ng-options="cityState for cityState in ctrl.cityStates">
+        </select>
+  
+      </div> <!-- user location -->
     </div> <!-- angular IndexController -->
   </div> <!-- angular app -->
+
+	<script type="text/javascript" src="js/city_state.js"></script>
 
   <script type="text/javascript" src="js/angular.min.js"></script>
   <script type="text/javascript" src="js/app/app.js"></script>

@@ -6,9 +6,10 @@ class User < ApplicationRecord
   has_many :connections, dependent: :destroy
   has_many :friends, through: :connections, class_name: 'User'
 
-  belongs_to :region
-  belongs_to :country
-  belongs_to :division
+  belongs_to :region, optional: true
+  belongs_to :country, optional: true
+  belongs_to :division, optional: true
+
 
   validates_presence_of :fb_id, :se_id
 

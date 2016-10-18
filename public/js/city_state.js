@@ -267,7 +267,7 @@ city_states['Venezuela'] = '|Caracas||Amazonas|Anzoategui|Apure|Aragua|Barinas|B
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-
+/*
 function setRegions()
 {
   for (region in countries)
@@ -319,3 +319,4 @@ function print_city_state(oCountrySel, oCity_StateSel)
     document.getElementById('txtplacename').innerHTML = city_state + ', ' + country;
   else document.getElementById('txtplacename').innerHTML = country;
 }
+*/
