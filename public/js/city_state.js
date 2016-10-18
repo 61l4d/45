@@ -245,7 +245,7 @@ city_states['Yemen'] = '|Sanaa||Abyan|\'Adan|Al Bayda\'|Al Hudaydah|Al Jawf|Al M
 //North America
 city_states['Bermuda'] = '|Hamilton||Devonshire|Hamilton|Hamilton|Paget|Pembroke|Saint George|Saint George\'s|Sandys|Smith\'s|Southampton|Warwick';
 city_states['Canada'] = '|Ottawa||Alberta|British Columbia|Manitoba|New Brunswick|Newfoundland and Labrador|Northwest Territories|Nova Scotia|Nunavut|Ontario|Prince Edward Island|Quebec|Saskatchewan|Yukon Territory';
-city_states['Caribbean'] = '';
+//city_states['Caribbean'] = '';
 city_states['Greenland'] = '|Nuuk (Godthab)||Avannaa (Nordgronland)|Tunu (Ostgronland)|Kitaa (Vestgronland)';
 city_states['Mexico'] = '|Mexico (Distrito Federal)||Aguascalientes|Baja California|Baja California Sur|Campeche|Chiapas|Chihuahua|Coahuila de Zaragoza|Colima|Durango|Guanajuato|Guerrero|Hidalgo|Jalisco|Michoacan de Ocampo|Morelos|Nayarit|Nuevo Leon|Oaxaca|Puebla|Queretaro de Arteaga|Quintana Roo|San Luis Potosi|Sinaloa|Sonora|Tabasco|Tamaulipas|Tlaxcala|Veracruz-Llave|Yucatan|Zacatecas';
 city_states['United States'] = '|Washington DC||Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Georgia|Kentucky|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusets|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New Hampshire|New Jersey|New Mexico|New York|North Carolina|North Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South Carolina|South Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming';
