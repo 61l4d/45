@@ -4,8 +4,18 @@ class SessionsController < ApplicationController
     user_ip = request.remote_ip
     geolocation = params['position']
 
-    # https://maps.googleapis.com/maps/api/geocode/json?latlng=40.796695899999996,-73.9734577&result_type=street_address|locality|country&key=ENV['GOOGLE_API_KEY']
+    if not geolocation.nil?
+      response = Unirest.get "https://maps.googleapis.com/maps/api/geocode/json",
+                 parameters: {
+                   latlng: geolocation["latitude"] + "," + geolocation["longitude"],
+                   result_type: "street_address|locality|country",
+                   key: ENV['GOOGLE_API_KEY']
+                 }
+
+      body = response.body
+return render json: {body}
     # see google_geocode_demo file in controllers folder
+    end
 
     error_message = ""
     error_message += "fb session undefined. " if session[:fb].nil?
