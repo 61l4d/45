@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
                  }
 
       body = response.body
-  return render json: {body: body}
+  return render json: Geolocation.country_state_locality_from_google_hash(body)
     # see google_geocode_demo file in controllers folder
     end
 
