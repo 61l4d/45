@@ -7,13 +7,13 @@ class SessionsController < ApplicationController
     if not geolocation.nil?
       response = Unirest.get "https://maps.googleapis.com/maps/api/geocode/json",
                  parameters: {
-                   latlng: geolocation["latitude"] + "," + geolocation["longitude"],
+                   latlng: geolocation["latitude"].to_s + "," + geolocation["longitude"].to_s,
                    result_type: "street_address|locality|country",
                    key: ENV['GOOGLE_API_KEY']
                  }
 
       body = response.body
-return render json: {body}
+  return render json: {body: body}
     # see google_geocode_demo file in controllers folder
     end
 
