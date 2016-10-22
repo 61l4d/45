@@ -20,7 +20,7 @@ console.log(data)
       window.location = "/t";
 
     // confirmation is needed to change linked se account 
-    } else if (data.confirm_update_se_account){
+    } else if (data.session.confirm_update_se_account){
       ctrl.message = $sce.trustAsHtml('SE user <a href="http://stackexchange.com/users/' + data.confirm_update_se_account + '" target="_blank">' + data.confirm_update_se_account + '</a> is linked with this account, but you signed in with SE user <a href="http://stackexchange.com/users/' + data.se_data.se_id + '" target="_blank">' + data.se_data.se_id + '</a>. Please type "yes" below to update our records to the new SE account, or type "no" to be redirected back to login. Click "Send" when you\'re ready. Please note that if you are logged into SE through StackExchange OpenID you must log out of both Stack Exchange (<a href="https://stackexchange.com/users/logout" target="_blank">https://stackexchange.com/users/logout</a>) and Stack Exchange OpenId here: <a href="https://openid.stackexchange.com/user" target="_blank">https://openid.stackexchange.com/user</a> or clear the browser data to be able to log in as a new user to StackExchange.');
       ctrl.inputRequested = true;
 
@@ -57,12 +57,9 @@ console.log(resp.data);
 
     // regular login without se update or error
     } else {
-      ctrl.session = {
-        fb: data.fb_data,
-        se: data.se_data
-      };
+      ctrl.session = data.session
 
-      ctrl.message = $sce.trustAsHtml("Welcome " + (data.new_user_created ? '' : 'back ') + ctrl.session.fb.name + '!');
+      ctrl.message = $sce.trustAsHtml("Welcome " + (ctrl.session.new_user_created ? '' : 'back ') + ctrl.session.fb_data.name + '!');
     }
   });
 
