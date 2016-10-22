@@ -86,3 +86,6 @@ sftp-config.json
 
 # dot env
 *.env
+
+# .DS_Store
+*.DS_Store
