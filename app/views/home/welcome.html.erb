@@ -16,9 +16,39 @@
 
   <!-- first login link -->
   <div>Please click the link below to be directed to external logins:</div>
-  <a href="/login/init">Login</a>
+  <form action="/login/init" method="post" onsubmit="return loginInit(this)">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+    <input type="hidden" name="position" id="position" value="" />
+    <input type="submit" id="form-submit" value="Login to FB and SE" />
+  </form>
 
   <script type="text/javascript">
+    function loginInit(form){
+      document.getElementById('form-submit').value = "Initializing location dialog, please wait...";
+
+      window.navigator.geolocation.getCurrentPosition(
+        // success
+        function (position){
+          document.getElementById('position').value = JSON.stringify({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          });
+          
+          form.submit();
+        },
+
+        // error
+        function (){ 
+          var child = document.getElementById('position')
+          document.forms[0].removeChild(child);
+          form.submit();
+        }
+      );
+
+      return false;
+    }
+
+    // clear cookies
     var cookies = document.cookie.split(";");
 
     for (var i = 0; i < cookies.length; i++) {

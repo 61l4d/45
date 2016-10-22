@@ -2,20 +2,6 @@ class SessionsController < ApplicationController
 
   def info
     user_ip = request.remote_ip
-    geolocation = params['position']
-
-    if not geolocation.nil?
-      response = Unirest.get "https://maps.googleapis.com/maps/api/geocode/json",
-                 parameters: {
-                   latlng: geolocation["latitude"].to_s + "," + geolocation["longitude"].to_s,
-                   result_type: "street_address|locality|country",
-                   key: ENV['GOOGLE_API_KEY']
-                 }
-
-      body = response.body
-  return render json: Geolocation.country_state_locality_from_google_hash(body)
-    # see google_geocode_demo file in controllers folder
-    end
 
     error_message = ""
     error_message += "fb session undefined. " if session[:fb].nil?
@@ -36,7 +22,7 @@ class SessionsController < ApplicationController
           fb_id: session[:fb]["fb_id"],
           se_id: session[:se]["se_id"],
           ip_addresses: {user_ip.to_s => [Time.now.to_s]},
-          geolocations: [geolocation],
+          geolocations: [session[:geolocation]],
           preferences: {}
         )
         
@@ -59,7 +45,7 @@ class SessionsController < ApplicationController
       render json: {
         fb_data: session[:fb], 
         se_data: session[:se], 
-        geolocation: geolocation,
+        geolocation: session[:geolocation],
         new_user_created: new_user_created, 
         confirm_update_se_account: confirm_update_se_account
       }, status: 200

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   # logins
 
-  get 'login/init', to: 'logins#init'
+  post 'login/init', to: 'logins#init'
 
   get 'login/fb_oauth', to: 'logins#fb_oauth'
 
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   # sessions
 	
-	post 'sessions/info', to: 'sessions#info'
+	get 'sessions/info', to: 'sessions#info'
 
   get 'login', to: 'sessions#get_outside_accounts'
 

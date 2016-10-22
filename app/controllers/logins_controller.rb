@@ -2,6 +2,19 @@ class LoginsController < ApplicationController
   require 'securerandom'
 
   def init
+    if not params[:position].nil?
+      geolocation = JSON.parse(params[:position])
+      response = Unirest.get "https://maps.googleapis.com/maps/api/geocode/json",
+                 parameters: {
+                   latlng: geolocation["latitude"].to_s + "," + geolocation["longitude"].to_s,
+                   result_type: "street_address|locality|country",
+                   key: ENV['GOOGLE_API_KEY']
+                 }
+
+      body = response.body
+      session[:geolocation] = Geolocation.country_state_locality_from_google_hash(body)
+    # see google_geocode_demo file in controllers folder
+    end
     # redirect to fb login
     timed_redirect(message: "Redirecting to FB login...", location: "login/fb_oauth", milliseconds: 2000)
   end

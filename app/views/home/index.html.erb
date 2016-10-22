@@ -25,7 +25,7 @@
 			<!-- user location -->
       <div id="user-location-div">
 				<div>My Location (Optional, enables other users to find you by location)</div>
-        Region&raquo; 
+        Region: 
 				<select 
 					ng-model="ctrl.region" 
 					ng-change="ctrl.setRegion()" 
@@ -33,7 +33,7 @@
 					size="1">
 				</select>
 
-				Country&raquo; 
+				Country: 
 				<select 
 					ng-disabled="!ctrl.region"
 					ng-model="ctrl.country"
@@ -42,7 +42,7 @@
 					size="1" 
         </select>
 
-				City/State&raquo; 
+				City/State: 
 				<select size="1" 
 					ng-disabled="!ctrl.region || !ctrl.country"
 					ng-model="ctrl.cityState"
