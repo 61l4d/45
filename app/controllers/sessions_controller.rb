@@ -21,11 +21,12 @@ class SessionsController < ApplicationController
         new_user = User.new(
           fb_id: session[:fb]["fb_id"],
           se_id: session[:se]["se_id"],
-          ip_addresses: {user_ip.to_s => [Time.now.to_s]},
-          geolocations: [session[:geolocation]],
+          ip_addresses: user_ip,
           preferences: {}
         )
         
+        new_user.geolocations = session[:geolocation] if not session[:geolocation].nil?
+
         if new_user.save
           new_user_created = true
 
@@ -35,8 +36,8 @@ class SessionsController < ApplicationController
         end
 
       else
-        # save ip and geolocation
-        # to do...
+        current_user.update(ip_addresses: user_ip)
+        current_user.update(geolocations: session[:geolocation]) if not session[:geolocation].nil?
 
         # if se_id does not match, request confirmation to change 
         confirm_update_se_account = current_user.se_id if session[:se]["se_id"].to_s != current_user.se_id
