@@ -22,17 +22,17 @@ class User < ApplicationRecord
     temp = {} if temp.nil?
 
     # ip has been recorded  
-    if ip_addresses.include?(ip)
+    if temp.include?(ip)
       temp[ip].pop if temp[ip].length == 11
       temp[ip].insert(1,Time.now)
       temp[ip][0] += 1
       write_attribute(:ip_addresses,temp)
 
     else
-    # delete the least recorded ip if more than 20 ips
-      temp.delete(temp.min_by{|x| x[1][0]}[0]) if ip_addresses.length == 1
+      # delete the least recorded ip if more than 20 ips
+      temp.delete(temp.min_by{|x| x[1][0]}[0]) if temp.length == 1
 
-    # insert new ip
+      # insert new ip
       temp[ip] = [1,Time.now]
     end
 
@@ -41,9 +41,20 @@ class User < ApplicationRecord
 
   def geolocations=(geolocation)
     temp = geolocations
-    temp = [] if temp.nil?
-    temp.pop if temp.length == 20
-    temp.unshift([geolocation,Time.now])
+    temp = {} if temp.nil?
+    key = [geolocation["country"],geolocation["administrative_area_level_1"],geolocation["locality"]].join(";")
+
+    if temp.include?(key)
+      temp[key].pop if temp[key].length == 11
+      temp[key].insert(1,Time.now)
+      temp[key][0] += 1
+    else
+      # delete the least recorded ip if more than 20 ips
+      temp.delete(temp.min_by{|x| x[1][0]}[0]) if temp.length == 1
+
+      # insert new geolocation
+      temp[key] = [1,Time.now]
+    end
 
     write_attribute(:geolocations, temp)
   end
