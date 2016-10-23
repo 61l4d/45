@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017233540) do
+ActiveRecord::Schema.define(version: 20161017233740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,10 +46,19 @@ ActiveRecord::Schema.define(version: 20161017233540) do
     t.text     "ip_addresses"
     t.text     "geolocations"
     t.text     "preferences"
+    t.integer  "region_id"
+    t.integer  "country_id"
+    t.integer  "division_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["country_id"], name: "index_users_on_country_id", using: :btree
+    t.index ["division_id"], name: "index_users_on_division_id", using: :btree
+    t.index ["region_id"], name: "index_users_on_region_id", using: :btree
   end
 
   add_foreign_key "countries", "regions"
   add_foreign_key "divisions", "countries"
+  add_foreign_key "users", "countries"
+  add_foreign_key "users", "divisions"
+  add_foreign_key "users", "regions"
 end

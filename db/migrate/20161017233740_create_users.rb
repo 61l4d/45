@@ -10,7 +10,6 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.belongs_to :region, foreign_key: true
       t.belongs_to :country, foreign_key: true
       t.belongs_to :division, foreign_key: true
- 
 
       t.timestamps
     end
