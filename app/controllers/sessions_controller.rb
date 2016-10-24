@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
 
         if new_user.save
           new_user_created = true
-          other_users = new_user.other_users_serialized
+          friends = (new_user.friends + new_user.users).map{|friend| User.serialize(friend)}
 
         # if there are user validation errors
         else 
@@ -53,7 +53,7 @@ class SessionsController < ApplicationController
         } if not current_user.region.nil?
 
         # users object
-        other_users = current_user.other_users_serialized
+        friends = (current_user.friends + current_user.users).map{|friend| User.serialize(friend)}
       end
 
       render json: {
@@ -65,7 +65,7 @@ class SessionsController < ApplicationController
           new_user_created: new_user_created, 
           confirm_update_se_account: confirm_update_se_account
         },
-        users: other_users
+        friends: friends
       }, status: 200
     end
   end
