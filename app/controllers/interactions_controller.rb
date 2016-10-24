@@ -1,5 +1,8 @@
 class InteractionsController < ApplicationController
   def update
+
+    # move this functionality to model?
+
     return render json: {error: {message: "Current user is undefined. Please log in again."}} if current_user.nil?
 
     command = interaction_params[:command]
