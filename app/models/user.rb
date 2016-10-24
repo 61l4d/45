@@ -13,6 +13,10 @@ class User < ApplicationRecord
 
   validates_presence_of :fb_id, :se_id
 
+  def other_users_serialized
+    User.where.not(id: id).map(&:serialize)
+  end
+
   def users
     User.includes(:connections).where(connections: {friend_id: id})
   end
@@ -57,5 +61,13 @@ class User < ApplicationRecord
     end
 
     write_attribute(:geolocations, temp)
+  end
+
+  def serialize
+    {
+      fb_id: fb_id,
+      se_id: se_id,
+      location: {region: region, country: country, division: division}
+    }
   end
 end

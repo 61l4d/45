@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
     else
       confirm_update_se_account = false
       new_user_created = false
+      my_location = false
 
       # create user
       if current_user.nil?
@@ -29,27 +30,31 @@ class SessionsController < ApplicationController
 
         if new_user.save
           new_user_created = true
+          other_users = new_user.other_users_serialized
 
         # if there are user validation errors
         else 
           return render json: {error: {message: new_user.errors.messages.inspect}}, status: 200
         end
 
+      # current_user is defined
       else
         current_user.update(ip_addresses: user_ip)
         current_user.update(geolocations: session[:geolocation]) if not session[:geolocation].nil?
 
         # if se_id does not match, request confirmation to change 
         confirm_update_se_account = current_user.se_id if session[:se]["se_id"].to_s != current_user.se_id
+
+        # retrieve location set by user
+        my_location = {
+          region: current_user.region.name, 
+          country: current_user.country.nil? ? nil : current_user.country.name, 
+          division: current_user.division.nil? ? nil : current_user.division.name
+        } if not current_user.region.nil?
+
+        # users object
+        other_users = current_user.other_users_serialized
       end
-
-      my_location = false
-
-      my_location = {
-        region: current_user.region.name, 
-        country: current_user.country.nil? ? nil : current_user.country.name, 
-        division: current_user.division.nil? ? nil : current_user.division.name
-      } if not current_user.nil? and not current_user.region.nil?
 
       render json: {
         session: {
@@ -59,7 +64,8 @@ class SessionsController < ApplicationController
           my_location: my_location,
           new_user_created: new_user_created, 
           confirm_update_se_account: confirm_update_se_account
-        }
+        },
+        users: other_users
       }, status: 200
     end
   end

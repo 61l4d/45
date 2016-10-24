@@ -31,17 +31,16 @@ class InteractionsController < ApplicationController
       new_region = Region.find_by(name: parameters[0])
       location_string += new_region.name if not new_region.nil?
 
-      new_country = Country.find_by(name: parameters[1])
-      location_string += ", #{new_country.name}" if not new_country.nil?
-
-      new_division = Division.find_by(name: parameters[2])
-      location_string += ", #{new_division.name}" if not new_division.nil?
-
-      if new_region.nil? or new_country.nil?
-        location_string = ""
-        new_country = new_division = nil
+      if not new_region.nil?
+        new_country = Country.find_by(name: parameters[1])
+        location_string += ", #{new_country.name}" if not new_country.nil?
       end
-      
+
+      if not new_country.nil?
+        new_division = Division.find_by(name: parameters[2])
+        location_string += ", #{new_division.name}" if not new_division.nil?
+      end
+
       current_user.update(region: new_region, country: new_country, division: new_division)
       render json: {location_string: location_string}, status: 200
     end # end case
