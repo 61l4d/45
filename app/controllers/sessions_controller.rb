@@ -43,11 +43,20 @@ class SessionsController < ApplicationController
         confirm_update_se_account = current_user.se_id if session[:se]["se_id"].to_s != current_user.se_id
       end
 
+      my_location = false
+
+      my_location = {
+        region: current_user.region.name, 
+        country: current_user.country.nil? ? nil : current_user.country.name, 
+        division: current_user.division.nil? ? nil : current_user.division.name
+      } if not current_user.nil? and not current_user.region.nil?
+
       render json: {
         session: {
           fb_data: session[:fb], 
           se_data: session[:se], 
           geolocation: session[:geolocation],
+          my_location: my_location,
           new_user_created: new_user_created, 
           confirm_update_se_account: confirm_update_se_account
         }

@@ -1,10 +1,11 @@
 function IndexController(SessionService,InteractionService,$window,$sce){
   var ctrl = this;
 
-  ctrl.messageTitle = "Message from AppJoin:";
-  ctrl.buttonText = "Send";
+  ctrl.messageTitle = '';
+  ctrl.buttonText = 'Send';
   // ctrl.buttonClick = function
   ctrl.inputRequested = false;
+  ctrl.myLocationMessage = 'Retrieving data...';
     
   // retrieve session information and post location
   SessionService.getSessionInfo().then(function(resp){
@@ -57,9 +58,30 @@ console.log(resp.data);
 
     // regular login without se update or error
     } else {
+      // session data
       ctrl.session = data.session
 
+      // general message
       ctrl.message = $sce.trustAsHtml("Welcome " + (ctrl.session.new_user_created ? '' : 'back ') + ctrl.session.fb_data.name + '!');
+
+      // my location message
+      if (!ctrl.session.my_location){
+        ctrl.myLocationMessage = 'Please consider setting your location to enable other nearby users to find you.';
+      
+      } else {
+        ctrl.region = ctrl.session.my_location.region;
+        ctrl.setRegion();
+
+        if (ctrl.session.my_location.country){
+          ctrl.country = ctrl.session.my_location.country;
+          ctrl.setCountry();
+        }
+
+        if (ctrl.session.my_location.division){
+          ctrl.cityState = ctrl.session.my_location.division;
+        }
+        ctrl.myLocationMessage = '';
+      }
     }
   });
 
@@ -69,12 +91,41 @@ console.log(resp.data);
     if (ctrl.region){
       ctrl.countries = countries[ctrl.region].split('|');
       ctrl.cityStates = [];
+    
+    } else {
+      ctrl.countries = [];
+      ctrl.cityStates = [];
     }
   };
 
   ctrl.setCountry = function(){
     if (ctrl.country){
       ctrl.cityStates = city_states[ctrl.country].split('|'); 
+    }
+  }
+
+  // update user location
+  ctrl.updateMyLocation = function(){
+    if (!(ctrl.region === undefined || !ctrl.region.match(/\S/)) || confirm('Are you sure you want to unset your location details?')){
+      var postData = {
+            interaction: {
+              command: 'update my location',
+              parameters: [ctrl.region,ctrl.country,ctrl.cityState]
+            }
+          };
+
+      InteractionService.update(postData).then(function(resp){
+        var data = resp.data;
+console.log(data)
+        if (data.error !== undefined){
+          alert ('There was an error updating location: \n' + data.error.message);
+        
+        } else {
+          ctrl.myLocationMessage = data.location_string.match(/\S/) 
+                                 ? 'Location updated to ' + data.location_string + '.'
+                                 : 'Location details unset.';
+        }
+      });
     }
   }
 }
