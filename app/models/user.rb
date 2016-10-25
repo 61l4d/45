@@ -58,7 +58,7 @@ class User < ApplicationRecord
 
   # returns friends object with last updated time
   def update_connections(fb_friends_arr)
-    error_message = "Errors: "
+    error_message = ""
     friends_array = friends + users
 
     fb_friends_arr.each_with_index do |friend_obj,i|
@@ -88,10 +88,10 @@ class User < ApplicationRecord
 
     {
       friends: friends_array.map do |friend|
-                 friend.serialize
-                 friend["last_updated"] = friend_last_updated(friend)
+                 serialized = friend.serialize
+                 serialized.merge("last_updated" => friend_last_updated(friend))
                end,
-      errors: error_message
+      connection_update_errors: error_message
     }
   end
 
@@ -141,11 +141,15 @@ class User < ApplicationRecord
     write_attribute(:geolocations, temp)
   end
 
-  def self.serialize(user)
+  def serialize
     {
-      fb_id: user.fb_id,
-      se_id: user.se_id,
-      location: {region: user.region, country: user.country, division: user.division}
-    } if not user.nil?
+      fb_id: fb_id,
+      se_id: se_id,
+      location: {
+        region: region.nil? ? "" : region.name, 
+        country: country.nil? ? "" : country.name, 
+        division: division.nil? ? "" : division.name
+      }
+    }
   end
 end
