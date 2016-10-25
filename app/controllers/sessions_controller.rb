@@ -55,7 +55,7 @@ class SessionsController < ApplicationController
         # users object
         friends = (current_user.friends + current_user.users).map{|friend| User.serialize(friend)}
       end
-
+raise current_user.update_connections(current_user.get_friends(session[:fb]["access_token"])).inspect
       render json: {
         session: {
           fb_data: session[:fb], 
