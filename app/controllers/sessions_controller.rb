@@ -89,7 +89,7 @@ class SessionsController < ApplicationController
 
     session[:fb]["fb_id"] = fb_response.body["id"]
 		session[:fb]["name"] = fb_response.body["name"]
-    session[:se]["se_id"] = se_response.body["items"][0]["account_id"]
+    session[:se]["se_id"] = se_response.body["items"][0]["account_id"] # se_response.body["items"] might be missing if no accounts exist except the stackexchange account itself.
     
     redirect_to '/t1'
   end
