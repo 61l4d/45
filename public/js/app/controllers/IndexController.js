@@ -61,6 +61,9 @@ console.log(resp.data);
       // session data
       ctrl.session = data.session
 
+      // friends array
+      ctrl.friends = data.friends_updated.friends
+
       // general message
       ctrl.message = $sce.trustAsHtml("Welcome " + (ctrl.session.new_user_created ? '' : 'back ') + ctrl.session.fb_data.name + '!');
 

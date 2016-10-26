@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
 
         if new_user.save
           new_user_created = true
-          friends = (new_user.friends + new_user.users).map(&:serialize)
+          friends_updated = new_user.update_connections(new_user.get_friends(session[:fb]["access_token"]))
 
         # if there are user validation errors
         else 
@@ -53,9 +53,9 @@ class SessionsController < ApplicationController
         } if not current_user.region.nil?
 
         # users object
-        friends = (current_user.friends + current_user.users).map(&:serialize)
+        friends_updated = current_user.update_connections(current_user.get_friends(session[:fb]["access_token"]))
       end
-raise current_user.update_connections(current_user.get_friends(session[:fb]["access_token"])).inspect
+
       render json: {
         session: {
           fb_data: session[:fb], 
@@ -65,7 +65,7 @@ raise current_user.update_connections(current_user.get_friends(session[:fb]["acc
           new_user_created: new_user_created, 
           confirm_update_se_account: confirm_update_se_account
         },
-        friends: friends
+        friends_updated: friends_updated
       }, status: 200
     end
   end
