@@ -61,6 +61,8 @@ class User < ApplicationRecord
     error_message = ""
     friends_array = friends + users
 
+# to do: return fb_friends_arr instead, with additional se_id and last_updated
+
     fb_friends_arr.each_with_index do |friend_obj,i|
       friend_listed = friends_array.find{|friend| friend.fb_id == friend_obj["id"]}
       # create connection if none
