@@ -59,41 +59,47 @@ class User < ApplicationRecord
   # returns friends object with last updated time
   def update_connections(fb_friends_arr)
     error_message = ""
-    friends_array = friends + users
 
 # to do: return fb_friends_arr instead, with additional se_id and last_updated
 
     fb_friends_arr.each_with_index do |friend_obj,i|
-      friend_listed = friends_array.find{|friend| friend.fb_id == friend_obj["id"]}
-      # create connection if none
-      if friend_listed.nil? 
-        friend = User.find_by(fb_id: friend_obj["id"])
+      friend = User.find_by(fb_id: friend_obj["id"])
 
-        # cannot find friend in db
-        if friend.nil?
-          error_message += "Could not find fb friend with id #{friend_obj["id"]} in our records; "
+      # if cannot find friend in db
+      if friend.nil?
+        error_message += "Could not find fb friend with id #{friend_obj["id"]} in our records; "
 
-        else
+      # friend is in db, find or create connection
+      else 
+        last_updated = friend_last_updated(friend)
+        
+        # if no connection yet
+        if last_updated.nil?
           connection = Connection.new(friend_id: friend.id, user_id: id, last_read_friend_update: Time.now - 1.day, last_read_user_update: Time.now - 1.day)
 
           # cannot save connection
           if not connection.save
             error_message += "Could not save connection with fb friend with id #{friend_obj["id"]}: #{connection.errors.messages.inspect}; "
 
-          # otherwise, add friend to friends_array
+          # otherwise, add last_updated
           else 
-            friends_array << friend
+            fb_friends_arr[i]["last_updated"] = connection.last_read_friend_update
           end # end error saving connection
-        end # end find friend in db
-      end # end create connection if none
+
+        # connection already exists
+        else
+          fb_friends_arr[i]["last_updated"] = last_updated
+        end
+
+        fb_friends_arr[i]["fb_id"] = fb_friends_arr[i]["id"]
+        fb_friends_arr[i]["id"] = friend["id"]
+        fb_friends_arr[i]["se_id"] = friend.se_id
+      end # end if friend not in db
     end # end fb_friends_arr.each
 
-    {
-      friends: friends_array.map do |friend|
-                 serialized = friend.serialize
-                 serialized.merge("last_updated" => friend_last_updated(friend))
-               end,
-      connection_update_errors: error_message
+    { 
+      friends: fb_friends_arr,
+      update_connections_error_message: error_message
     }
   end
 
