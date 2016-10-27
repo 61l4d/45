@@ -1,11 +1,9 @@
 function IndexController(SessionService,InteractionService,$window,$sce){
   var ctrl = this;
 
-  ctrl.messageTitle = '';
   ctrl.buttonText = 'Send';
   // ctrl.buttonClick = function
   ctrl.inputRequested = false;
-  ctrl.myLocationMessage = 'Retrieving data...';
     
   // retrieve session information and post location
   SessionService.getSessionInfo().then(function(resp){
